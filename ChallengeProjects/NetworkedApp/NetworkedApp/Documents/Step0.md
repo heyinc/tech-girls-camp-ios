@@ -104,17 +104,13 @@ struct NetworkedApp: App {
 ### 1️⃣ まずはポケモンのデータを用意する
 
 ```swift
-let pokemon = Pokemon(
-    name: "pikachu",
-    url: "https://pokeapi.co/api/v2/pokemon/25/"
-)
+let pokemon = Pokemon(id: 25, name: "pikachu")
 ```
 
 #### ここで何をしている？
 - **ポケモンの情報** を変数 `pokemon` に保存している。
+- `id` には **ポケモンの図鑑番号**、`25`（ピカチュウ）が入っている。
 - `name` には **ポケモンの名前**、「pikachu」が入っている。
-- `url` には **ポケモンの API の URL** が入っている。
-- この URL の末尾の数字（`25`）が **ポケモンの図鑑番号（ID）** になる。
 - ID をもとに、スプライト画像の URL が自動で作られる（`imageURL`）。
 - `displayName` で名前の先頭が大文字になる（`pikachu` → `Pikachu`）。
 
