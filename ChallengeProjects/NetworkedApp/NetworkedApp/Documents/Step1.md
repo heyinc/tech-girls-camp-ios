@@ -83,10 +83,7 @@ struct PokemonListView: View {
 #### **変更前の `PokemonItemView`**
 ```swift
 struct PokemonItemView: View {
-    let pokemon = Pokemon(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
+    let pokemon = Pokemon(id: 25, name: "pikachu")
 ```
 この書き方では、**毎回同じポケモン（ピカチュウ）が表示されてしまう** ため、  
 表示する内容を変えられるように変更します。
@@ -106,10 +103,7 @@ struct PokemonItemView: View {
 
 ```swift
 #Preview {
-    let pokemon = Pokemon(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
+    let pokemon = Pokemon(id: 25, name: "pikachu")
 
     PokemonItemView(pokemon: pokemon)
         .padding(.horizontal)
@@ -123,26 +117,11 @@ struct PokemonItemView: View {
 
 ```swift
 struct PokemonListView: View {
-    let pokemon1 = Pokemon(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
-    let pokemon2 = Pokemon(
-        name: "bulbasaur",
-        url: "https://pokeapi.co/api/v2/pokemon/1/"
-    )
-    let pokemon3 = Pokemon(
-        name: "charmander",
-        url: "https://pokeapi.co/api/v2/pokemon/4/"
-    )
-    let pokemon4 = Pokemon(
-        name: "squirtle",
-        url: "https://pokeapi.co/api/v2/pokemon/7/"
-    )
-    let pokemon5 = Pokemon(
-        name: "eevee",
-        url: "https://pokeapi.co/api/v2/pokemon/133/"
-    )
+    let pokemon1 = Pokemon(id: 25, name: "pikachu")
+    let pokemon2 = Pokemon(id: 1, name: "bulbasaur")
+    let pokemon3 = Pokemon(id: 4, name: "charmander")
+    let pokemon4 = Pokemon(id: 7, name: "squirtle")
+    let pokemon5 = Pokemon(id: 133, name: "eevee")
 ```
 
 ---
@@ -270,10 +249,7 @@ struct PokemonItemView: View {
 }
 
 #Preview {
-    let pokemon = Pokemon(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
+    let pokemon = Pokemon(id: 25, name: "pikachu")
     PokemonItemView(pokemon: pokemon)
         .padding(.horizontal)
 }
@@ -286,26 +262,11 @@ struct PokemonItemView: View {
 import SwiftUI
 
 struct PokemonListView: View {
-    let pokemon1 = Pokemon(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
-    let pokemon2 = Pokemon(
-        name: "bulbasaur",
-        url: "https://pokeapi.co/api/v2/pokemon/1/"
-    )
-    let pokemon3 = Pokemon(
-        name: "charmander",
-        url: "https://pokeapi.co/api/v2/pokemon/4/"
-    )
-    let pokemon4 = Pokemon(
-        name: "squirtle",
-        url: "https://pokeapi.co/api/v2/pokemon/7/"
-    )
-    let pokemon5 = Pokemon(
-        name: "eevee",
-        url: "https://pokeapi.co/api/v2/pokemon/133/"
-    )
+    let pokemon1 = Pokemon(id: 25, name: "pikachu")
+    let pokemon2 = Pokemon(id: 1, name: "bulbasaur")
+    let pokemon3 = Pokemon(id: 4, name: "charmander")
+    let pokemon4 = Pokemon(id: 7, name: "squirtle")
+    let pokemon5 = Pokemon(id: 133, name: "eevee")
 
     var body: some View {
         ScrollView {
