@@ -82,45 +82,48 @@ APIを使ってデータを取得するには、次の手順が必要です。
 
 ### 1. `Pokemon.swift` のモデルを確認する
 まず、`Pokemon.swift` にすでに定義されている構造体を確認しましょう。  
-今回使うのは `PokemonListResponse` と `Pokemon` です。
+今回使うのは `Pokemon`、`PokemonListResponse`、`PokemonListEntry` です。
 
 **確認するファイル: `Pokemon.swift`**
 
 ```swift
 import Foundation
 
-// リストAPI用（/pokemon?limit=151 のレスポンス）
-struct PokemonListResponse: Decodable {
-    let results: [Pokemon]
-}
-
-struct Pokemon: Identifiable, Decodable {
+// ポケモンのデータ構造
+struct Pokemon: Identifiable {
+    let id: Int
     let name: String
-    let url: String
 
-    // URLの末尾からIDを取り出す（例: ".../pokemon/25/" → 25）
-    var id: Int {
-        let parts = url.split(separator: "/")
-        return Int(parts.last ?? "") ?? 0
-    }
-
-    // スプライト画像のURL
+    var displayName: String { name.capitalized }
     var imageURL: URL? {
         URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")
     }
+}
 
-    // 表示用の名前（先頭大文字）
-    var displayName: String {
-        name.capitalized
+// リストAPI用（/pokemon?limit=151 のレスポンス）
+struct PokemonListResponse: Decodable {
+    let results: [PokemonListEntry]
+}
+
+// APIレスポンスの1件分（name と url のみ）
+struct PokemonListEntry: Decodable {
+    let name: String
+    let url: String
+
+    // PokemonListEntry → Pokemon に変換する
+    func toPokemon() -> Pokemon {
+        let parts = url.split(separator: "/")
+        let id = Int(parts.last ?? "") ?? 0
+        return Pokemon(id: id, name: name)
     }
 }
 ```
 
 🔹 **ポイント**
+- `Pokemon` はアプリで使うポケモンのデータ構造です。`id`（図鑑番号）と `name`（名前）を持っています。
 - `PokemonListResponse` は API のレスポンス全体を表す構造体です。`results` の中にポケモン一覧が入っています。
-- `Pokemon` は各ポケモンの情報を表します。
-- `Decodable` がついているので、JSON を自動で変換できます。
-- `id` は `url` の末尾の数字から計算します（例: `".../pokemon/25/"` → `25`）。
+- `PokemonListEntry` は API レスポンスの1件分です。`Decodable` がついているので、JSON を自動で変換できます。
+- `toPokemon()` で API のデータをアプリで使う `Pokemon` に変換します。
 - `imageURL` でポケモンの画像を取得できます。
 
 ---
@@ -239,26 +242,31 @@ struct NetworkedApp: App {
 ```swift
 import Foundation
 
-// リストAPI用（/pokemon?limit=151 のレスポンス）
-struct PokemonListResponse: Decodable {
-    let results: [Pokemon]
-}
-
-struct Pokemon: Identifiable, Decodable {
+// ポケモンのデータ構造
+struct Pokemon: Identifiable {
+    let id: Int
     let name: String
-    let url: String
 
-    var id: Int {
-        let parts = url.split(separator: "/")
-        return Int(parts.last ?? "") ?? 0
-    }
-
+    var displayName: String { name.capitalized }
     var imageURL: URL? {
         URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")
     }
+}
 
-    var displayName: String {
-        name.capitalized
+// リストAPI用（/pokemon?limit=151 のレスポンス）
+struct PokemonListResponse: Decodable {
+    let results: [PokemonListEntry]
+}
+
+// APIレスポンスの1件分（name と url のみ）
+struct PokemonListEntry: Decodable {
+    let name: String
+    let url: String
+
+    func toPokemon() -> Pokemon {
+        let parts = url.split(separator: "/")
+        let id = Int(parts.last ?? "") ?? 0
+        return Pokemon(id: id, name: name)
     }
 }
 

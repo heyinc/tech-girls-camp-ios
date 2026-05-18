@@ -224,10 +224,7 @@ struct PokemonDetailView: View {
 #Preview {
     NavigationStack {
         PokemonDetailView(
-            pokemon: Pokemon(
-                name: "pikachu",
-                url: "https://pokeapi.co/api/v2/pokemon/25/"
-            )
+            pokemon: Pokemon(id: 25, name: "pikachu")
         )
     }
 }
@@ -417,10 +414,7 @@ struct PokemonDetailView: View {
 #Preview {
     NavigationStack {
         PokemonDetailView(
-            pokemon: Pokemon(
-                name: "pikachu",
-                url: "https://pokeapi.co/api/v2/pokemon/25/"
-            )
+            pokemon: Pokemon(id: 25, name: "pikachu")
         )
     }
 }
