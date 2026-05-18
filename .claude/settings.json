@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcodebuild:*)",
+      "Bash(xcrun simctl:*)",
+      "Bash(open:*)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/*.secrets.xcconfig)",
+      "Read(**/*GoogleService-Info.plist)",
+      "Read(~/.ssh/*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(nc:*)"
+    ]
+  },
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "300000"
+  }
+}
