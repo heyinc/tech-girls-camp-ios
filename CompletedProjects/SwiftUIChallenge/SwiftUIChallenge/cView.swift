@@ -14,7 +14,7 @@ struct cView: View {
                 .fill(.green)
                 .frame(width: 200, height: 100)
             Text("Bottom Left")
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .padding(8)
         }
     }

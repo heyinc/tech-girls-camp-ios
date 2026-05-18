@@ -3,7 +3,7 @@ import SwiftUI
 struct CoffeeDetailView: View {
     
     var body: some View {
-        Text("CoffeeListView")
+        Text("CoffeeDetailView")
     }
 }
 

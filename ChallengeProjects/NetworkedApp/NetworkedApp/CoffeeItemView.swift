@@ -11,7 +11,7 @@ struct CoffeeItemView: View {
     )
 
     // お気に入り情報は状態が変わるため、@Stateのおまじない
-    @State var isFavorite: Bool = false
+    @State private var isFavorite: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -59,12 +59,12 @@ struct CoffeeItemView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .padding()
             .background(Color.black.opacity(0.5))
             .background(.ultraThinMaterial)
         }
-        .cornerRadius(10)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 

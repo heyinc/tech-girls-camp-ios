@@ -59,7 +59,7 @@ xcode-select --install
 インストールが完了したら、Xcode を開きます。
 
 1. Xcode を起動  
-2. 「Create a new Xcode project」を選択  or 「Xcode > File > Project」を選択
+2. 「Create a new Xcode project」を選択  or 「Xcode > File > New > Project...」を選択
 
 <img width="700" src="images/02_1.png">
 
@@ -105,7 +105,7 @@ Xcode の画面は **大きく5つのエリア** に分かれています。
 
 <img width="700" src="images/02_xcode_ui_overview.png">
 
-もし各Areaが表示されていな場合、以下のアイコンをタップしてみてください。
+もし各Areaが表示されていない場合、以下のアイコンをタップしてみてください。
 
 <img width="700" src="images/02_xcode_ui_hiddon_button.png">
 

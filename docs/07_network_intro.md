@@ -1,39 +1,39 @@
 
-![](images/07_1.png)
+![サーバーと通信するモバイルアプリ - タイトル](images/07_1.png)
 
-![](images/07_2.png)
+![現代のモバイルアプリはインターネットに常時接続している](images/07_2.png)
 
-![](images/07_3.png)
+![アプリとサーバー間の通信の仕組み - リクエストとレスポンス](images/07_3.png)
 
-![](images/07_4.png)
+![JSONの概要 - テキストでデータ構造を表現するデータ記述言語](images/07_4.png)
 
-![](images/07_5.png)
+![JSONの具体例 - コーヒーアプリの画面構造をJSONで表現](images/07_5.png)
 
-![](images/07_6.png)
+![JSONのtitleフィールドがアプリのカードのタイトルに対応](images/07_6.png)
 
-![](images/07_7.png)
+![JSONのdescriptionフィールドがアプリのカードの説明文に対応](images/07_7.png)
 
-![](images/07_8.png)
+![JSONのingredientsフィールド（配列）がアプリの材料リストに対応](images/07_8.png)
 
-![](images/07_9.png)
+![JSONのimageフィールド（URL）がアプリのサムネイル画像に対応](images/07_9.png)
 
-![](images/07_10.png)
+![サーバーからJSON取得の流れ(1) - アプリからサーバーにGETリクエストを送信](images/07_10.png)
 
-![](images/07_11.png)
+![サーバーからJSON取得の流れ(2) - サーバーがデータベースから情報を読み出す](images/07_11.png)
 
-![](images/07_12.png)
+![サーバーからJSON取得の流れ(3) - 読み出したデータからJSONを組み立てる](images/07_12.png)
 
-![](images/07_13.png)
+![サーバーからJSON取得の流れ(4) - サーバーがJSONをレスポンスとして返却](images/07_13.png)
 
-![](images/07_14.png)
+![サーバーからJSON取得の流れ(5) - 受け取ったJSONの各フィールドをUIにマッピング](images/07_14.png)
 
-![](images/07_15.png)
+![サーバーからJSON取得の流れ(6) - マッピング完了しアプリにコーヒーカードが表示](images/07_15.png)
 
-![](images/07_16.png)
+![HTTPメソッドの説明 - GET/POST/PUT・PATCH/DELETEの役割](images/07_16.png)
 
-![](images/07_17.png)
+![余談(1) - 画像表示時にも画像URLにGETリクエストを送信している](images/07_17.png)
 
-![](images/07_18.png)
+![余談(2) - 画像サーバーが画像ファイルをレスポンスとして返却する流れ](images/07_18.png)
 
 
 ## 次のチャレンジ

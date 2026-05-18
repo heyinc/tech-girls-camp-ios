@@ -25,10 +25,10 @@ struct MainTabView: View {
                     Image(systemName: "text.book.closed.fill")
                     Text("ポケモン図鑑")
                 }
-            Text("tab4")
+            Text("その他")
                 .tabItem {
                     Image(systemName: "ellipsis")
-                    Text("tab4")
+                    Text("その他")
                 }
         }
     }

@@ -33,19 +33,17 @@ SwiftUI を使い、API からコーヒーのデータを取得し、それを�
   │   │   ├── Coffee.swift               # コーヒーデータの構造体
   │   │   ├── Assets.xcassets/           # アセット管理
   │   ├── Documents/
-  │   │   ├── Step0/                     # Step 0 の説明資料
-  │   │   ├── Step1/                     # Step 1 の説明資料
-  │   │   ├── Step2/                     # Step 2 の説明資料
-  │   │   ├── Step3/                     # Step 3 の説明資料
-  │   │   ├── Step4/                     # Step 4 の説明資料
-  │   │   ├── Step5/                     # Step 5 の説明資料
-  │   ├── README.md (この説明ファイル)
+  │   │   ├── Step0.md                   # Step 0 の説明資料
+  │   │   ├── Step1.md                   # Step 1 の説明資料
+  │   │   ├── Step2.md                   # Step 2 の説明資料
+  │   │   ├── Step3.md                   # Step 3 の説明資料
+  │   │   ├── Step4.md                   # Step 4 の説明資料
+  │   │   ├── Step5.md                   # Step 5 の説明資料
   │
 📁 CompletedProjects/
   ├── 📂 NetworkedApp/                   # 完成したプロジェクト
   │   ├── NetworkedApp.xcodeproj
   │   ├── NetworkedApp/
-  │   ├── README.md
 ```
 
 ---

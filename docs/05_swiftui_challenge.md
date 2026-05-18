@@ -27,7 +27,6 @@
   │   ├── cView.swift           # ここに課題を実装する
   │   ├── dView.swift           # ここに課題を実装する
   │   ├── eView.swift           # ここに課題を実装する
-  │   ├── README.md (この説明ファイル)
   │
 📁 CompletedProjects/
   ├── 📂 SwiftUIChallenge/      # 完成版プロジェクト
@@ -38,7 +37,6 @@
   │   ├── cView.swift           # 解答例が記述されている
   │   ├── dView.swift           # 解答例が記述されている
   │   ├── eView.swift           # 解答例が記述されている
-  │   ├── README.md
 ```
 
 ---

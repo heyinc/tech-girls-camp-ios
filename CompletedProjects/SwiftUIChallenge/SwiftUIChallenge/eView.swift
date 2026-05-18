@@ -12,18 +12,18 @@ struct eView: View {
         VStack(alignment: .leading, spacing: 10) {
             AsyncImage(url: URL(string: "https://picsum.photos/300/200")!)
                 .frame(width: 300, height: 200)
-                .cornerRadius(10)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             Text("商品名: おしゃれなバッグ")
                 .font(.headline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
             Text("¥12,800")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.green)
+                .foregroundStyle(.green)
         }
         .padding()
         .background(Color.white)
-        .cornerRadius(15)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
     }
 }

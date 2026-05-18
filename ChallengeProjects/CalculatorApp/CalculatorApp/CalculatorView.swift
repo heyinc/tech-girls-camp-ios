@@ -10,9 +10,9 @@ import SwiftUI
 struct CalculatorView: View {
     // 最初に利用する変数を定義しています
     // @State: プロパティが変更されたときにビューを自動的に再描画するためのおまじない
-    @State var firstNumber: String = ""
-    @State var secondNumber: String = ""
-    @State var result: String = "?"
+    @State private var firstNumber: String = ""
+    @State private var secondNumber: String = ""
+    @State private var result: String = "?"
     
     var body: some View {
         VStack(spacing: 20) {
@@ -62,8 +62,8 @@ struct CalculatorView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .foregroundStyle(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding(.horizontal)
 

@@ -36,15 +36,10 @@ struct CoffeeListView: View {
     
     // MARK: - Methods
     func getCoffees() async throws -> [Coffee] {
-        do {
-            guard let url = URL(string: "https://api.sampleapis.com/coffee/hot") else { return [] }
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let coffee = try JSONDecoder().decode([Coffee].self, from: data)
-            dump(coffee)
-            return coffee
-        } catch {
-            throw error
-        }
+        guard let url = URL(string: "https://api.sampleapis.com/coffee/hot") else { return [] }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let coffees = try JSONDecoder().decode([Coffee].self, from: data)
+        return coffees
     }
 }
 

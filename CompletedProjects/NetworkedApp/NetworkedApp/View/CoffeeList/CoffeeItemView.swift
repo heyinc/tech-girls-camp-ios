@@ -33,8 +33,7 @@ struct CoffeeItemView: View {
                     Button(action: {
                         markAsFavorite()
                     }) {
-                        let isFavorite = FavoriteCoffeeManager.shared.contains(coffee)
-                        Image(systemName: isFavorite ? "star.fill" : "star")
+                        Image(systemName: FavoriteCoffeeManager.shared.contains(coffee) ? "star.fill" : "star")
                     }
                 }
                 Text(coffee.description)
@@ -50,12 +49,12 @@ struct CoffeeItemView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .padding()
             .background(Color.black.opacity(0.5))
             .background(.ultraThinMaterial)
         }
-        .cornerRadius(10)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
     
     func markAsFavorite() {

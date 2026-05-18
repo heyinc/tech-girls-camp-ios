@@ -83,7 +83,7 @@ APIのデータを受け取れるように `Decodable` を追加します。
 **編集するファイル: `Coffee.swift`**
 
 ```swift
-import SwiftUI
+import Foundation
 
 struct Coffee: Identifiable, Decodable {
     let id: Int
@@ -194,7 +194,7 @@ struct NetworkedApp: App {
 
 ### `Coffee.swift`
 ```swift
-import SwiftUI
+import Foundation
 
 struct Coffee: Identifiable, Decodable {
     let id: Int
