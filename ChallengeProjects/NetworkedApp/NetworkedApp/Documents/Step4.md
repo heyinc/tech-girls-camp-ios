@@ -62,7 +62,7 @@ Step 3 では、サーバー（API）から取得したポケモンのデータ�
 import SwiftUI
 
 struct PokemonListView: View {
-    @State private var pokemons: [PokemonListItem] = [] // サーバーから取得するポケモン一覧データ
+    @State private var pokemons: [Pokemon] = [] // サーバーから取得するポケモン一覧データ
 
     var body: some View {
         NavigationStack { // ← NavigationStackを追加して画面遷移を管理
@@ -93,11 +93,11 @@ struct PokemonListView: View {
     }
 
     // MARK: - APIデータ取得メソッド
-    func getPokemons() async throws -> [PokemonListItem] {
+    func getPokemons() async throws -> [Pokemon] {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else { return [] }
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
-        return response.results
+        return response.results.map { $0.toPokemon() }
     }
 }
 
@@ -126,7 +126,7 @@ struct PokemonListView: View {
 import SwiftUI
 
 struct PokemonDetailView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
     @State private var detail: PokemonDetail?
 
     var body: some View {
@@ -224,7 +224,7 @@ struct PokemonDetailView: View {
 #Preview {
     NavigationStack {
         PokemonDetailView(
-            pokemon: PokemonListItem(
+            pokemon: Pokemon(
                 name: "pikachu",
                 url: "https://pokeapi.co/api/v2/pokemon/25/"
             )
@@ -234,7 +234,7 @@ struct PokemonDetailView: View {
 ```
 
 🔹 **このコードのポイント**
-- `let pokemon: PokemonListItem` で、リスト画面から選択されたポケモンのデータを受け取る
+- `let pokemon: Pokemon` で、リスト画面から選択されたポケモンのデータを受け取る
 - `@State private var detail: PokemonDetail?` で、詳細APIから取得したデータを保存
 - `.task {}` で画面表示時に `getPokemonDetail()` を実行し、詳細情報を取得
 - `AsyncImage` でポケモンの画像を大きめ（200x200）に表示
@@ -275,7 +275,7 @@ struct NetworkedApp: App {
 import SwiftUI
 
 struct PokemonListView: View {
-    @State private var pokemons: [PokemonListItem] = []
+    @State private var pokemons: [Pokemon] = []
 
     var body: some View {
         NavigationStack {
@@ -304,11 +304,11 @@ struct PokemonListView: View {
         }
     }
 
-    func getPokemons() async throws -> [PokemonListItem] {
+    func getPokemons() async throws -> [Pokemon] {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else { return [] }
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
-        return response.results
+        return response.results.map { $0.toPokemon() }
     }
 }
 
@@ -324,7 +324,7 @@ struct PokemonListView: View {
 import SwiftUI
 
 struct PokemonDetailView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
     @State private var detail: PokemonDetail?
 
     var body: some View {
@@ -417,7 +417,7 @@ struct PokemonDetailView: View {
 #Preview {
     NavigationStack {
         PokemonDetailView(
-            pokemon: PokemonListItem(
+            pokemon: Pokemon(
                 name: "pikachu",
                 url: "https://pokeapi.co/api/v2/pokemon/25/"
             )

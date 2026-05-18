@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct PokemonItemView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
     @Environment(\.modelContext) private var modelContext
     @Query private var favorites: [FavoritePokemon]
 
@@ -60,10 +60,7 @@ struct PokemonItemView: View {
 }
 
 #Preview {
-    let pokemon = PokemonListItem(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
+    let pokemon = Pokemon(id: 25, name: "pikachu")
 
     PokemonItemView(pokemon: pokemon)
         .padding(.horizontal)

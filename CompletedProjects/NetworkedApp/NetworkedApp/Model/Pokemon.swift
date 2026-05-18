@@ -1,28 +1,36 @@
 import Foundation
 
-// リストAPI用（/pokemon?limit=151 のレスポンス）
-struct PokemonListResponse: Decodable {
-    let results: [PokemonListItem]
-}
-
-struct PokemonListItem: Identifiable, Decodable {
+// ポケモンのデータ構造
+struct Pokemon: Identifiable {
+    let id: Int
     let name: String
-    let url: String
 
-    // URLの末尾からIDを取り出す（例: ".../pokemon/25/" → 25）
-    var id: Int {
-        let parts = url.split(separator: "/")
-        return Int(parts.last ?? "") ?? 0
+    // 表示用の名前（先頭大文字）
+    var displayName: String {
+        name.capitalized
     }
 
     // スプライト画像のURL
     var imageURL: URL? {
         URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")
     }
+}
 
-    // 表示用の名前（先頭大文字）
-    var displayName: String {
-        name.capitalized
+// リストAPI用（/pokemon?limit=151 のレスポンス）
+struct PokemonListResponse: Decodable {
+    let results: [PokemonListEntry]
+}
+
+// APIレスポンスの1件分（name と url のみ）
+struct PokemonListEntry: Decodable {
+    let name: String
+    let url: String
+
+    // PokemonListEntry → Pokemon に変換する
+    func toPokemon() -> Pokemon {
+        let parts = url.split(separator: "/")
+        let id = Int(parts.last ?? "") ?? 0
+        return Pokemon(id: id, name: name)
     }
 }
 

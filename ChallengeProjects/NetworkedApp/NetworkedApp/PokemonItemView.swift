@@ -2,10 +2,7 @@ import SwiftUI
 
 struct PokemonItemView: View {
     // このViewを構成している要素を宣言
-    let pokemon = PokemonListItem(
-        name: "pikachu",
-        url: "https://pokeapi.co/api/v2/pokemon/25/"
-    )
+    let pokemon = Pokemon(id: 25, name: "pikachu")
 
     // お気に入り情報は状態が変わるため、@Stateのおまじない
     @State private var isFavorite: Bool = false

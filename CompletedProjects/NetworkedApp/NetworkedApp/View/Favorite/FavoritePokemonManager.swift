@@ -11,7 +11,7 @@ struct FavoritePokemonManager {
         self.modelContext = modelContext
     }
 
-    func toggle(_ pokemon: PokemonListItem) {
+    func toggle(_ pokemon: Pokemon) {
         if contains(pokemon) {
             remove(pokemon)
         } else {
@@ -19,7 +19,7 @@ struct FavoritePokemonManager {
         }
     }
 
-    func contains(_ pokemon: PokemonListItem) -> Bool {
+    func contains(_ pokemon: Pokemon) -> Bool {
         let pokemonId = pokemon.id
         let descriptor = FetchDescriptor<FavoritePokemon>(
             predicate: #Predicate { $0.pokemonId == pokemonId }
@@ -28,12 +28,12 @@ struct FavoritePokemonManager {
         return count > 0
     }
 
-    private func add(_ pokemon: PokemonListItem) {
+    private func add(_ pokemon: Pokemon) {
         let favorite = FavoritePokemon(pokemonId: pokemon.id, name: pokemon.name)
         modelContext.insert(favorite)
     }
 
-    private func remove(_ pokemon: PokemonListItem) {
+    private func remove(_ pokemon: Pokemon) {
         let pokemonId = pokemon.id
         let descriptor = FetchDescriptor<FavoritePokemon>(
             predicate: #Predicate { $0.pokemonId == pokemonId }

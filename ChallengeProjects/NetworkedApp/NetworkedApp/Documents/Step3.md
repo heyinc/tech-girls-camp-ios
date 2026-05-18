@@ -68,9 +68,9 @@ JSON は **データの形（フォーマット）** のひとつです。
 APIを使ってデータを取得するには、次の手順が必要です。
 
 1. **`Pokemon.swift` にあるモデル構造体を確認する**
-   - APIから取得したデータを `PokemonListItem` の形に変換できるようになっている
+   - APIから取得したデータを `Pokemon` の形に変換できるようになっている
 2. **`getPokemons()` 関数を作る**
-   - API からデータを取得し、`PokemonListItem` に変換する関数を作る
+   - API からデータを取得し、`Pokemon` に変換する関数を作る
 3. **`PokemonListView.swift` を更新する**
    - `.task {}` を使って、データを取得し、リストを更新する
 4. **取得したデータを `@State` で管理**
@@ -82,7 +82,7 @@ APIを使ってデータを取得するには、次の手順が必要です。
 
 ### 1. `Pokemon.swift` のモデルを確認する
 まず、`Pokemon.swift` にすでに定義されている構造体を確認しましょう。  
-今回使うのは `PokemonListResponse` と `PokemonListItem` です。
+今回使うのは `PokemonListResponse` と `Pokemon` です。
 
 **確認するファイル: `Pokemon.swift`**
 
@@ -91,10 +91,10 @@ import Foundation
 
 // リストAPI用（/pokemon?limit=151 のレスポンス）
 struct PokemonListResponse: Decodable {
-    let results: [PokemonListItem]
+    let results: [Pokemon]
 }
 
-struct PokemonListItem: Identifiable, Decodable {
+struct Pokemon: Identifiable, Decodable {
     let name: String
     let url: String
 
@@ -118,7 +118,7 @@ struct PokemonListItem: Identifiable, Decodable {
 
 🔹 **ポイント**
 - `PokemonListResponse` は API のレスポンス全体を表す構造体です。`results` の中にポケモン一覧が入っています。
-- `PokemonListItem` は各ポケモンの情報を表します。
+- `Pokemon` は各ポケモンの情報を表します。
 - `Decodable` がついているので、JSON を自動で変換できます。
 - `id` は `url` の末尾の数字から計算します（例: `".../pokemon/25/"` → `25`）。
 - `imageURL` でポケモンの画像を取得できます。
@@ -132,14 +132,14 @@ APIからデータを取得する関数 `getPokemons()` を **`PokemonListView.s
 1. `PokemonListView` の中に、次のメソッドを追加してください。
 
 ```swift
-func getPokemons() async throws -> [PokemonListItem] {
+func getPokemons() async throws -> [Pokemon] {
     guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else { return [] }
 
     let (data, _) = try await URLSession.shared.data(from: url)
 
     let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
 
-    return response.results
+    return response.results.map { $0.toPokemon() }
 }
 ```
 
@@ -147,7 +147,7 @@ func getPokemons() async throws -> [PokemonListItem] {
 1. `URL(string:)` で APIのURL を作成
 2. `URLSession.shared.data(from:)` で **サーバーからデータを取得**
 3. `JSONDecoder().decode(PokemonListResponse.self, from: data)` で **データを `PokemonListResponse` に変換**
-4. `response.results` でポケモンのリストだけを取り出して返す
+4. `response.results.map { $0.toPokemon() }` で API のレスポンスを `Pokemon` に変換して返す
 
 ---
 
@@ -160,7 +160,7 @@ func getPokemons() async throws -> [PokemonListItem] {
 import SwiftUI
 
 struct PokemonListView: View {
-    @State private var pokemons: [PokemonListItem] = []
+    @State private var pokemons: [Pokemon] = []
 
     var body: some View {
         ScrollView {
@@ -189,7 +189,7 @@ struct PokemonListView: View {
 ```
 
 🔹 **追加したポイント**
-- `@State private var pokemons: [PokemonListItem] = []`
+- `@State private var pokemons: [Pokemon] = []`
   - 取得したデータを保存するための変数
 - `ForEach(pokemons)` を使って、配列の中のポケモンを1つずつ `PokemonItemView` に表示
 - `.task {}` を追加
@@ -203,10 +203,10 @@ struct PokemonListView: View {
 
 **編集するファイル: `PokemonItemView.swift`**
 
-ハードコードされていた `let pokemon = PokemonListItem(...)` の行を、次のように変更してください。
+ハードコードされていた `let pokemon = Pokemon(...)` の行を、次のように変更してください。
 
 ```swift
-let pokemon: PokemonListItem
+let pokemon: Pokemon
 ```
 
 これで、外から `PokemonItemView(pokemon: pokemon)` のようにデータを渡せるようになります。
@@ -241,10 +241,10 @@ import Foundation
 
 // リストAPI用（/pokemon?limit=151 のレスポンス）
 struct PokemonListResponse: Decodable {
-    let results: [PokemonListItem]
+    let results: [Pokemon]
 }
 
-struct PokemonListItem: Identifiable, Decodable {
+struct Pokemon: Identifiable, Decodable {
     let name: String
     let url: String
 
@@ -287,7 +287,7 @@ struct PokemonDetail: Decodable {
 import SwiftUI
 
 struct PokemonListView: View {
-    @State private var pokemons: [PokemonListItem] = []
+    @State private var pokemons: [Pokemon] = []
 
     var body: some View {
         ScrollView {
@@ -309,11 +309,11 @@ struct PokemonListView: View {
         }
     }
 
-    func getPokemons() async throws -> [PokemonListItem] {
+    func getPokemons() async throws -> [Pokemon] {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else { return [] }
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
-        return response.results
+        return response.results.map { $0.toPokemon() }
     }
 }
 

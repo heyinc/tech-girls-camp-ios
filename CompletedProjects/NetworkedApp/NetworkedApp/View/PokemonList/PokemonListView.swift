@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PokemonListView: View {
-    @State private var pokemons: [PokemonListItem] = []
+    @State private var pokemons: [Pokemon] = []
 
     var body: some View {
         NavigationStack {
@@ -37,11 +37,11 @@ struct PokemonListView: View {
         }
     }
 
-    func getPokemons() async throws -> [PokemonListItem] {
+    func getPokemons() async throws -> [Pokemon] {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else { return [] }
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
-        return response.results
+        return response.results.map { $0.toPokemon() }
     }
 }
 

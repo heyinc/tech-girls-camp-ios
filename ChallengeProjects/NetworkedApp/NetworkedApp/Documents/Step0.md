@@ -104,7 +104,7 @@ struct NetworkedApp: App {
 ### 1️⃣ まずはポケモンのデータを用意する
 
 ```swift
-let pokemon = PokemonListItem(
+let pokemon = Pokemon(
     name: "pikachu",
     url: "https://pokeapi.co/api/v2/pokemon/25/"
 )

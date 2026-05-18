@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PokemonDetailView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
     @State private var detail: PokemonDetail?
 
     var body: some View {
@@ -98,10 +98,7 @@ struct PokemonDetailView: View {
 #Preview {
     NavigationStack {
         PokemonDetailView(
-            pokemon: PokemonListItem(
-                name: "pikachu",
-                url: "https://pokeapi.co/api/v2/pokemon/25/"
-            )
+            pokemon: Pokemon(id: 25, name: "pikachu")
         )
     }
 }

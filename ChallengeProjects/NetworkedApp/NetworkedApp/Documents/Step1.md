@@ -83,7 +83,7 @@ struct PokemonListView: View {
 #### **変更前の `PokemonItemView`**
 ```swift
 struct PokemonItemView: View {
-    let pokemon = PokemonListItem(
+    let pokemon = Pokemon(
         name: "pikachu",
         url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
@@ -95,18 +95,18 @@ struct PokemonItemView: View {
 
 ```swift
 struct PokemonItemView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
 ```
 
-- `let pokemon = PokemonListItem(...)` を削除  
-- `let pokemon: PokemonListItem` に変更  
+- `let pokemon = Pokemon(...)` を削除  
+- `let pokemon: Pokemon` に変更  
 - これにより、**外部からデータを受け取ることができる**
 
 この変更に伴って、Preview の記述も変更する必要があります。
 
 ```swift
 #Preview {
-    let pokemon = PokemonListItem(
+    let pokemon = Pokemon(
         name: "pikachu",
         url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
@@ -123,23 +123,23 @@ struct PokemonItemView: View {
 
 ```swift
 struct PokemonListView: View {
-    let pokemon1 = PokemonListItem(
+    let pokemon1 = Pokemon(
         name: "pikachu",
         url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
-    let pokemon2 = PokemonListItem(
+    let pokemon2 = Pokemon(
         name: "bulbasaur",
         url: "https://pokeapi.co/api/v2/pokemon/1/"
     )
-    let pokemon3 = PokemonListItem(
+    let pokemon3 = Pokemon(
         name: "charmander",
         url: "https://pokeapi.co/api/v2/pokemon/4/"
     )
-    let pokemon4 = PokemonListItem(
+    let pokemon4 = Pokemon(
         name: "squirtle",
         url: "https://pokeapi.co/api/v2/pokemon/7/"
     )
-    let pokemon5 = PokemonListItem(
+    let pokemon5 = Pokemon(
         name: "eevee",
         url: "https://pokeapi.co/api/v2/pokemon/133/"
     )
@@ -206,7 +206,7 @@ struct NetworkedApp: App {
 3. **`LazyVStack` を使った**
    - アイテムが **縦に並ぶように配置** した。
 4. **`PokemonItemView` を変更**
-   - 外部から `PokemonListItem` のデータを受け取るようにした。
+   - 外部から `Pokemon` のデータを受け取るようにした。
 
 ---
 
@@ -217,7 +217,7 @@ struct NetworkedApp: App {
 import SwiftUI
 
 struct PokemonItemView: View {
-    let pokemon: PokemonListItem
+    let pokemon: Pokemon
 
     @State private var isFavorite: Bool = false
 
@@ -270,7 +270,7 @@ struct PokemonItemView: View {
 }
 
 #Preview {
-    let pokemon = PokemonListItem(
+    let pokemon = Pokemon(
         name: "pikachu",
         url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
@@ -286,23 +286,23 @@ struct PokemonItemView: View {
 import SwiftUI
 
 struct PokemonListView: View {
-    let pokemon1 = PokemonListItem(
+    let pokemon1 = Pokemon(
         name: "pikachu",
         url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
-    let pokemon2 = PokemonListItem(
+    let pokemon2 = Pokemon(
         name: "bulbasaur",
         url: "https://pokeapi.co/api/v2/pokemon/1/"
     )
-    let pokemon3 = PokemonListItem(
+    let pokemon3 = Pokemon(
         name: "charmander",
         url: "https://pokeapi.co/api/v2/pokemon/4/"
     )
-    let pokemon4 = PokemonListItem(
+    let pokemon4 = Pokemon(
         name: "squirtle",
         url: "https://pokeapi.co/api/v2/pokemon/7/"
     )
-    let pokemon5 = PokemonListItem(
+    let pokemon5 = Pokemon(
         name: "eevee",
         url: "https://pokeapi.co/api/v2/pokemon/133/"
     )

@@ -72,12 +72,12 @@ Step 1 では、`pokemon1` 〜 `pokemon5` の **5つの変数** を用意しま�
 次のように、`pokemons` という配列を作り、データをまとめます。
 
 ```swift
-let pokemons: [PokemonListItem] = [
-    PokemonListItem(name: "pikachu", url: "https://pokeapi.co/api/v2/pokemon/25/"),
-    PokemonListItem(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
-    PokemonListItem(name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/4/"),
-    PokemonListItem(name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/"),
-    PokemonListItem(name: "eevee", url: "https://pokeapi.co/api/v2/pokemon/133/"),
+let pokemons: [Pokemon] = [
+    Pokemon(id: 25, name: "pikachu"),
+    Pokemon(id: 1, name: "bulbasaur"),
+    Pokemon(id: 4, name: "charmander"),
+    Pokemon(id: 7, name: "squirtle"),
+    Pokemon(id: 133, name: "eevee"),
 ]
 ```
 
@@ -105,12 +105,12 @@ LazyVStack(spacing: 8) {
 import SwiftUI
 
 struct PokemonListView: View {
-    let pokemons: [PokemonListItem] = [
-        PokemonListItem(name: "pikachu", url: "https://pokeapi.co/api/v2/pokemon/25/"),
-        PokemonListItem(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
-        PokemonListItem(name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/4/"),
-        PokemonListItem(name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/"),
-        PokemonListItem(name: "eevee", url: "https://pokeapi.co/api/v2/pokemon/133/"),
+    let pokemons: [Pokemon] = [
+        Pokemon(id: 25, name: "pikachu"),
+        Pokemon(id: 1, name: "bulbasaur"),
+        Pokemon(id: 4, name: "charmander"),
+        Pokemon(id: 7, name: "squirtle"),
+        Pokemon(id: 133, name: "eevee"),
     ]
 
     var body: some View {

@@ -10,7 +10,7 @@ struct FavoriteListView: View {
             ScrollView {
                 VStack(spacing: 8) {
                     ForEach(favorites) { favorite in
-                        let pokemon = favorite.toPokemonListItem()
+                        let pokemon = favorite.toPokemon()
                         NavigationLink(destination: PokemonDetailView(pokemon: pokemon)) {
                             PokemonItemView(pokemon: pokemon)
                                 .padding(.horizontal)

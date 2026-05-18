@@ -12,11 +12,8 @@ final class FavoritePokemon {
         self.name = name
     }
 
-    // PokemonListItemに変換する
-    func toPokemonListItem() -> PokemonListItem {
-        PokemonListItem(
-            name: name,
-            url: "https://pokeapi.co/api/v2/pokemon/\(pokemonId)/"
-        )
+    // Pokemonに変換する
+    func toPokemon() -> Pokemon {
+        Pokemon(id: pokemonId, name: name)
     }
 }
