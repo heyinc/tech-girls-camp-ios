@@ -16,7 +16,7 @@
 
 1. **`MainTabView` を新しく作成し、アプリのナビゲーションを管理する**
 2. **`TabView` を使って、タブで画面を切り替えられるようにする**
-3. **コーヒー一覧 (`CoffeeListView`) と お気に入り (`FavoritesView`) をタブとして表示する**
+3. **ポケモン一覧 (`PokemonListView`)、お気に入り、その他 をタブとして表示する**
 4. **エントリーポイント (`NetworkedApp`) を更新し、アプリ起動時に `MainTabView` を表示する**
 
 ---
@@ -33,10 +33,10 @@
 
 ### 1. `MainTabView` を作成する
 
-アプリ全体を管理する **`MainTabView.swift`** を作成し、  
+アプリ全体を管理する **`MainTabView.swift`** を編集し、  
 `TabView` を使って画面を切り替えられるようにします。
 
-📌 **追加するファイル: `MainTabView.swift`**
+📌 **編集するファイル: `MainTabView.swift`**
 
 ```swift
 import SwiftUI
@@ -44,18 +44,25 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            // コーヒーリスト画面
-            CoffeeListView()
+            // ポケモンリスト画面
+            PokemonListView()
                 .tabItem {
                     Image(systemName: "list.bullet") // タブのアイコン
-                    Text("Coffees") // タブのラベル
+                    Text("ポケモン") // タブのラベル
                 }
 
             // お気に入り画面（仮置き）
-            Text("Favorites View") 
+            Text("お気に入り")
                 .tabItem {
                     Image(systemName: "star.fill") // タブのアイコン
-                    Text("Favorites") // タブのラベル
+                    Text("お気に入り") // タブのラベル
+                }
+
+            // その他画面（仮置き）
+            Text("その他")
+                .tabItem {
+                    Image(systemName: "ellipsis") // タブのアイコン
+                    Text("その他") // タブのラベル
                 }
         }
     }
@@ -69,14 +76,15 @@ struct MainTabView: View {
 📌 **追加したポイント**
 - `TabView {}` を使って、 **タブのあるレイアウト** を作成。
 - `.tabItem {}` を使って、 **各タブにアイコンとタイトル** を設定。
-- **コーヒーリスト (`CoffeeListView`)** を **最初のタブ** に設定。
-- **お気に入り画面はまだ未実装のため**、仮の `Text("Favorites View")` を表示。
+- **ポケモンリスト (`PokemonListView`)** を **最初のタブ** に設定。
+- **お気に入り画面はまだ未実装のため**、仮の `Text("お気に入り")` を表示。
+- **その他画面も仮の `Text("その他")` を表示**。あとから自由にカスタマイズできます。
 
 ---
 
 ### 2. `NetworkedApp.swift` を変更する
 
-今までは **`CoffeeListView` を直接表示** していましたが、  
+今までは **`PokemonListView` を直接表示** していましたが、  
 今回の変更で **タブバー (`MainTabView`) をアプリの起動時に表示する** ようにします。
 
 📌 **編集するファイル: `NetworkedApp.swift`**
@@ -95,7 +103,7 @@ struct NetworkedApp: App {
 ```
 
 📌 **変更したポイント**
-- `CoffeeListView()` → `MainTabView()` に変更
+- `PokemonListView()` → `MainTabView()` に変更
 - これで **アプリ起動時にタブバーが表示される**
 
 ---
@@ -110,18 +118,25 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            // コーヒーリスト画面
-            CoffeeListView()
+            // ポケモンリスト画面
+            PokemonListView()
                 .tabItem {
                     Image(systemName: "list.bullet") // タブのアイコン
-                    Text("Coffees") // タブのラベル
+                    Text("ポケモン") // タブのラベル
                 }
 
             // お気に入り画面（仮置き）
-            Text("Favorites View") 
+            Text("お気に入り")
                 .tabItem {
                     Image(systemName: "star.fill") // タブのアイコン
-                    Text("Favorites") // タブのラベル
+                    Text("お気に入り") // タブのラベル
+                }
+
+            // その他画面（仮置き）
+            Text("その他")
+                .tabItem {
+                    Image(systemName: "ellipsis") // タブのアイコン
+                    Text("その他") // タブのラベル
                 }
         }
     }
@@ -157,9 +172,10 @@ struct NetworkedApp: App {
    - 画面を切り替えるために **`TabView` を使った**。
    - 各タブには **アイコン (`Image(systemName:)`) とラベル (`Text()`)** を設定。
 
-2. **画面を2つ用意した**
-   - **`CoffeeListView`** を **1つ目のタブ** に追加した。
-   - **`FavoritesView` は未実装のため仮の `Text()` で表示**。
+2. **画面を3つ用意した**
+   - **`PokemonListView`** を **1つ目のタブ** に追加した。
+   - **お気に入り画面は未実装のため仮の `Text()` で表示**。
+   - **その他画面も仮の `Text()` で表示**。
 
 3. **アプリ起動時に `MainTabView` を表示するようにした**
    - **エントリーポイント (`NetworkedApp.swift`) を更新** し、`MainTabView` を起動時の画面にした。
@@ -171,4 +187,3 @@ struct NetworkedApp: App {
 ここからは自由に編集してみよう。
 
 ## ⏭️[もっとやってみよう](../../../../docs/08_networked_app.md#もっとやってみよう)
-

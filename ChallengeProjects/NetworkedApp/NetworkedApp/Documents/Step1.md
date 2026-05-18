@@ -1,42 +1,37 @@
 # Step 1: アイテムセルを複数個縦に並べる
 
 ## 目的
-Step 0 では、 **1つのコーヒーアイテム** を画面に表示しました。  
+Step 0 では、 **1匹のポケモン（ピカチュウ）** を画面に表示しました。  
 しかし、実際のアプリでは **複数のアイテムをリスト形式で表示** することが一般的です。  
 
-このステップでは、 **複数のコーヒーアイテムを縦に並べる** 方法を学びます。  
+このステップでは、 **複数のポケモンアイテムを縦に並べる** 方法を学びます。  
 
 ---
 
 ## 📌 やること
-1. `CoffeeListView` を作成し、複数の `CoffeeItemView` を **縦に並べる**
-2. **手書きのデータ** を使って、5つのコーヒーアイテムを表示
+1. `PokemonListView` を作成し、複数の `PokemonItemView` を **縦に並べる**
+2. **手書きのデータ** を使って、5匹のポケモンアイテムを表示
 3. `ScrollView` を使って、リストをスクロール可能にする
 4. `LazyVStack` を使って、効率よくアイテムを配置する
-5. `CoffeeItemView` を修正し、データを外部から受け取る形にする
+5. `PokemonItemView` を修正し、データを外部から受け取る形にする
 
 ---
 
 ## 画面の完成イメージ
-このステップが完了すると、画面に **5つのコーヒーのアイテム** が並んで表示されます。
+このステップが完了すると、画面に **5匹のポケモン** が並んで表示されます。
 
 ```
-+----------------------+
-|   ☕  Black Coffee   |
-|   Simple and hot     |
-+----------------------+
-|   ☕  Latte          |
-|   Smooth and creamy  |
-+----------------------+
-|   ☕  Cappuccino     |
-|   Espresso & milk    |
-+----------------------+
-|   ☕  Mocha          |
-|   Chocolate & coffee |
-+----------------------+
-|   ☕  Espresso       |
-|   Strong & bold      |
-+----------------------+
++----------------------------------------------+
+|  🖼  No.25  Pikachu                      ☆  |
++----------------------------------------------+
+|  🖼  No.1   Bulbasaur                    ☆  |
++----------------------------------------------+
+|  🖼  No.4   Charmander                   ☆  |
++----------------------------------------------+
+|  🖼  No.7   Squirtle                     ☆  |
++----------------------------------------------+
+|  🖼  No.133 Eevee                        ☆  |
++----------------------------------------------+
 ```
 
 <img width="300" src="../../../../docs/images/08_step1.png">
@@ -45,127 +40,108 @@ Step 0 では、 **1つのコーヒーアイテム** を画面に表示しまし
 
 ## 🏗 実装手順
 
-### 1. `CoffeeListView` を作成(すでに用意しています)
-Step 0 では、アプリの最初の画面として `CoffeeItemView` を **1つだけ** 表示していました。  
-今回は **リスト形式** にするため、新しく `CoffeeListView.swift` の中に、`CoffeeItemView` を **5つ** 並べます。
+### 1. `PokemonListView` を作成（すでに用意しています）
+Step 0 では、アプリの最初の画面として `PokemonItemView` を **1つだけ** 表示していました。  
+今回は **リスト形式** にするため、`PokemonListView.swift` の中に、`PokemonItemView` を **5つ** 並べます。
 
 ```swift
 import SwiftUI
 
-struct CoffeeListView: View {
+struct PokemonListView: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 20) {
-                CoffeeItemView()
+            LazyVStack(spacing: 8) {
+                PokemonItemView()
                     .padding(.horizontal)
-                CoffeeItemView()
+                PokemonItemView()
                     .padding(.horizontal)
-                CoffeeItemView()
+                PokemonItemView()
                     .padding(.horizontal)
-                CoffeeItemView()
+                PokemonItemView()
                     .padding(.horizontal)
-                CoffeeItemView()
+                PokemonItemView()
                     .padding(.horizontal)
             }
+            .padding(.vertical, 8)
         }
+        .background(Color(.systemGroupedBackground))
     }
 }
 
 #Preview {
-    CoffeeListView()
+    PokemonListView()
 }
 ```
 
 ---
 
-### 2. `CoffeeItemView` の変更
-これまでは、`CoffeeItemView` の中で **固定のコーヒー情報** を持っていました。  
-しかし、リスト形式にするため、 **外部からコーヒーデータを受け取る形** に変更します。
+### 2. `PokemonItemView` の変更
+これまでは、`PokemonItemView` の中で **固定のポケモン情報** を持っていました。  
+しかし、リスト形式にするため、 **外部からポケモンデータを受け取る形** に変更します。
 
-#### **変更前の `CoffeeItemView`**
+#### **変更前の `PokemonItemView`**
 ```swift
-struct CoffeeItemView: View {
-    let coffee = Coffee(
-        id: 1,
-        title: "Black Coffee",
-        description: "Simple and classic.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://example.com/coffee1.jpg")!
+struct PokemonItemView: View {
+    let pokemon = PokemonListItem(
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
 ```
-この書き方では、**毎回同じコーヒーが表示されてしまう** ため、  
+この書き方では、**毎回同じポケモン（ピカチュウ）が表示されてしまう** ため、  
 表示する内容を変えられるように変更します。
 
-#### **変更後の `CoffeeItemView`**
+#### **変更後の `PokemonItemView`**
 
 ```swift
-struct CoffeeItemView: View {
-    let coffee: Coffee
+struct PokemonItemView: View {
+    let pokemon: PokemonListItem
 ```
 
-- `let coffee = Coffee(...)` を削除  
-- `let coffee: Coffee` に変更  
+- `let pokemon = PokemonListItem(...)` を削除  
+- `let pokemon: PokemonListItem` に変更  
 - これにより、**外部からデータを受け取ることができる**
 
 この変更に伴って、Preview の記述も変更する必要があります。
 
 ```swift
 #Preview {
-    let coffee1 = Coffee(
-        id: 1,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon = PokemonListItem(
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
 
-    CoffeeItemView(coffee: coffee1)
-        .padding()
+    PokemonItemView(pokemon: pokemon)
+        .padding(.horizontal)
 }
 ```
 
 ---
 
-### 3. コーヒーデータを 5 つ用意する
-`CoffeeListView` の中に、**5つのコーヒーデータ** を定義します。
+### 3. ポケモンデータを 5 つ用意する
+`PokemonListView` の中に、**5匹のポケモンデータ** を定義します。
 
 ```swift
-struct CoffeeListView: View {
-    let coffee1 = Coffee(
-        id: 1,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+struct PokemonListView: View {
+    let pokemon1 = PokemonListItem(
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
-    let coffee2 = Coffee(
-        id: 2,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon2 = PokemonListItem(
+        name: "bulbasaur",
+        url: "https://pokeapi.co/api/v2/pokemon/1/"
     )
-    let coffee3 = Coffee(
-        id: 3,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon3 = PokemonListItem(
+        name: "charmander",
+        url: "https://pokeapi.co/api/v2/pokemon/4/"
     )
-    let coffee4 = Coffee(
-            id: 4,
-            title: "Black Coffee",
-            description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-            ingredients: ["Coffee"],
-            image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
-        )
-    let coffee5 = Coffee(
-        id: 5,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon4 = PokemonListItem(
+        name: "squirtle",
+        url: "https://pokeapi.co/api/v2/pokemon/7/"
+    )
+    let pokemon5 = PokemonListItem(
+        name: "eevee",
+        url: "https://pokeapi.co/api/v2/pokemon/133/"
     )
 ```
 
@@ -178,24 +154,25 @@ struct CoffeeListView: View {
 ```swift
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 20) {
-                CoffeeItemView(coffee: coffee1)
+            LazyVStack(spacing: 8) {
+                PokemonItemView(pokemon: pokemon1)
                     .padding(.horizontal)
 
-                CoffeeItemView(coffee: coffee2)
+                PokemonItemView(pokemon: pokemon2)
                     .padding(.horizontal)
 
-                CoffeeItemView(coffee: coffee3)
+                PokemonItemView(pokemon: pokemon3)
                     .padding(.horizontal)
 
-                CoffeeItemView(coffee: coffee4)
+                PokemonItemView(pokemon: pokemon4)
                     .padding(.horizontal)
 
-                CoffeeItemView(coffee: coffee5)
+                PokemonItemView(pokemon: pokemon5)
                     .padding(.horizontal)
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
         }
+        .background(Color(.systemGroupedBackground))
     }
 }
 ```
@@ -203,8 +180,8 @@ struct CoffeeListView: View {
 ---
 
 ### 5. `NetworkedApp.swift` を更新する
-今までは **1つのコーヒーアイテム** しか表示していませんでした。  
-このステップから、アプリの最初の画面を `CoffeeListView` に変更します。
+今までは **1匹のポケモン** しか表示していませんでした。  
+このステップから、アプリの最初の画面を `PokemonListView` に変更します。
 
 ```swift
 import SwiftUI
@@ -213,7 +190,7 @@ import SwiftUI
 struct NetworkedApp: App {
     var body: some Scene {
         WindowGroup {
-            CoffeeListView()
+            PokemonListView()
         }
     }
 }
@@ -223,35 +200,37 @@ struct NetworkedApp: App {
 
 ## 🎯 Step 1 のポイント
 1. **複数のアイテムを手動で並べた**
-   - `CoffeeItemView` を **5つ** 画面に表示した。
+   - `PokemonItemView` を **5つ** 画面に表示した。
 2. **`ScrollView` を追加**
    - **スクロール可能** にしたので、すべてのアイテムを表示できるようになった。
 3. **`LazyVStack` を使った**
    - アイテムが **縦に並ぶように配置** した。
-4. **`CoffeeItemView` を変更**
-   - 外部から `Coffee` のデータを受け取るようにした。
+4. **`PokemonItemView` を変更**
+   - 外部から `PokemonListItem` のデータを受け取るようにした。
 
 ---
 
 ## ✅ 完成後のコード
 
-### `CoffeeItemView.swift`
+### `PokemonItemView.swift`
 ```swift
 import SwiftUI
 
-struct CoffeeItemView: View {
-    let coffee: Coffee
+struct PokemonItemView: View {
+    let pokemon: PokemonListItem
+
+    @State private var isFavorite: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            AsyncImage(url: coffee.image) { phase in
+        HStack(spacing: 12) {
+            AsyncImage(url: pokemon.imageURL) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
                 case .success(let image):
                     image
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                 case .failure:
                     Image(systemName: "photo")
                         .imageScale(.large)
@@ -260,104 +239,100 @@ struct CoffeeItemView: View {
                     EmptyView()
                 }
             }
-            .frame(height: 200)
-            .frame(maxWidth: .infinity)
-            .contentShape(.rect)
+            .frame(width: 56, height: 56)
 
-            VStack(alignment: .leading, spacing: 10) {
-                Text(coffee.title)
-                    .font(.title)
+            Text("No.\(pokemon.id)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(width: 40)
 
-                Text(coffee.description)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+            Text(pokemon.displayName)
+                .font(.body)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+
+            Spacer()
+
+            Button(action: {
+                isFavorite.toggle()
+            }) {
+                Image(systemName: isFavorite ? "star.fill" : "star")
+                    .foregroundStyle(.yellow)
             }
-            .padding()
+            .buttonStyle(.plain)
         }
-        .cornerRadius(10)
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.08), radius: 2, y: 1)
     }
 }
 
 #Preview {
-    let coffee = Coffee(
-        id: 1,
-        title: "Black Coffee",
-        description: "Simple and classic.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://example.com/coffee1.jpg")!
+    let pokemon = PokemonListItem(
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
-    CoffeeItemView(coffee: coffee)
+    PokemonItemView(pokemon: pokemon)
+        .padding(.horizontal)
 }
 ```
 
 ---
 
-### `CoffeeListView.swift`
+### `PokemonListView.swift`
 ```swift
 import SwiftUI
 
-struct CoffeeListView: View {
-    let coffee1 = Coffee(
-        id: 1,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+struct PokemonListView: View {
+    let pokemon1 = PokemonListItem(
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
     )
-    let coffee2 = Coffee(
-        id: 2,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon2 = PokemonListItem(
+        name: "bulbasaur",
+        url: "https://pokeapi.co/api/v2/pokemon/1/"
     )
-    let coffee3 = Coffee(
-        id: 3,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon3 = PokemonListItem(
+        name: "charmander",
+        url: "https://pokeapi.co/api/v2/pokemon/4/"
     )
-    let coffee4 = Coffee(
-            id: 4,
-            title: "Black Coffee",
-            description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-            ingredients: ["Coffee"],
-            image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
-        )
-    let coffee5 = Coffee(
-        id: 5,
-        title: "Black Coffee",
-        description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-        ingredients: ["Coffee"],
-        image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
+    let pokemon4 = PokemonListItem(
+        name: "squirtle",
+        url: "https://pokeapi.co/api/v2/pokemon/7/"
     )
-   
+    let pokemon5 = PokemonListItem(
+        name: "eevee",
+        url: "https://pokeapi.co/api/v2/pokemon/133/"
+    )
+
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 20) {
-                CoffeeItemView(coffee: coffee1)
+            LazyVStack(spacing: 8) {
+                PokemonItemView(pokemon: pokemon1)
                     .padding(.horizontal)
-                
-                CoffeeItemView(coffee: coffee2)
+
+                PokemonItemView(pokemon: pokemon2)
                     .padding(.horizontal)
-                
-                CoffeeItemView(coffee: coffee3)
+
+                PokemonItemView(pokemon: pokemon3)
                     .padding(.horizontal)
-                
-                CoffeeItemView(coffee: coffee4)
+
+                PokemonItemView(pokemon: pokemon4)
                     .padding(.horizontal)
-                
-                CoffeeItemView(coffee: coffee5)
+
+                PokemonItemView(pokemon: pokemon5)
                     .padding(.horizontal)
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
         }
+        .background(Color(.systemGroupedBackground))
     }
 }
 
 #Preview {
-    CoffeeListView()
+    PokemonListView()
 }
 ```
 
@@ -371,7 +346,7 @@ import SwiftUI
 struct NetworkedApp: App {
     var body: some Scene {
         WindowGroup {
-            CoffeeListView()
+            PokemonListView()
         }
     }
 }
@@ -380,7 +355,7 @@ struct NetworkedApp: App {
 ---
 
 ## 🔜 次のステップ
-現在は、コーヒーアイテムを **手動で 5つ** 並べています。
+現在は、ポケモンアイテムを **手動で 5つ** 並べています。
 次のステップでは、 **`ForEach` を使って自動的にリストを作成** できるようにします！
 
 ➡️ [Step 2 - ForEach を使ってリストを整理する](./Step2.md)

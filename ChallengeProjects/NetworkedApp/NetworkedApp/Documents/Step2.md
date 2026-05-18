@@ -1,14 +1,14 @@
 # Step 2 - ForEach を使ってリストを整理する
 
 ## 目的
-Step 1 では、5つの `CoffeeItemView` を **1つずつ手書き** で並べました。  
+Step 1 では、5つの `PokemonItemView` を **1つずつ手書き** で並べました。  
 しかし、実際のアプリでは **数十個、数百個のデータ** を表示することがあります。  
 手作業で1つずつ書くのは大変なので、**ForEach を使ってリストを自動生成** する方法を学びます。  
 
 ---
 
 ## 📌 やること
-- `coffees` 配列を作成し、すべてのデータを **1つの変数で管理**
+- `pokemons` 配列を作成し、すべてのデータを **1つの変数で管理**
 - `ForEach` を使い、**リストをシンプルに記述**
 - `LazyVStack` 内で `ForEach` を利用し、**コードの重複をなくす**
 - **データの追加・変更を簡単にする**
@@ -16,22 +16,22 @@ Step 1 では、5つの `CoffeeItemView` を **1つずつ手書き** で並べ�
 ---
 
 ## 🤔 なぜ ForEach を使うのか？
-現在の `CoffeeListView` では、次のように **同じようなコードを繰り返し書いています**。
+現在の `PokemonListView` では、次のように **同じようなコードを繰り返し書いています**。
 
 ```swift
-CoffeeItemView(coffee: coffee1)
+PokemonItemView(pokemon: pokemon1)
     .padding(.horizontal)
 
-CoffeeItemView(coffee: coffee2)
+PokemonItemView(pokemon: pokemon2)
     .padding(.horizontal)
 
-CoffeeItemView(coffee: coffee3)
+PokemonItemView(pokemon: pokemon3)
     .padding(.horizontal)
 
-CoffeeItemView(coffee: coffee4)
+PokemonItemView(pokemon: pokemon4)
     .padding(.horizontal)
 
-CoffeeItemView(coffee: coffee5)
+PokemonItemView(pokemon: pokemon5)
     .padding(.horizontal)
 ```
 
@@ -41,7 +41,7 @@ CoffeeItemView(coffee: coffee5)
    - ほぼ同じコードを何度も書いているため、追加・修正が大変です。
 
 2. **データの変更が面倒**  
-   - 新しいコーヒーを追加するたびに、1行ずつ手作業でコードを追加しなければなりません。
+   - 新しいポケモンを追加するたびに、1行ずつ手作業でコードを追加しなければなりません。
 
 ---
 
@@ -49,48 +49,48 @@ CoffeeItemView(coffee: coffee5)
 SwiftUI の `ForEach` を使うと、次のように **1行のコードでリストを自動生成** できます。
 
 ```swift
-ForEach(coffees) { coffee in
-    CoffeeItemView(coffee: coffee)
+ForEach(pokemons) { pokemon in
+    PokemonItemView(pokemon: pokemon)
         .padding(.horizontal)
 }
 ```
 
-このコードは、`coffees` 配列の **すべてのデータを自動で処理** し、  
-**1つずつ `CoffeeItemView` に渡して表示** してくれます。
+このコードは、`pokemons` 配列の **すべてのデータを自動で処理** し、  
+**1つずつ `PokemonItemView` に渡して表示** してくれます。
 
-これにより、**新しいコーヒーを追加するときは、配列にデータを増やすだけ！**  
+これにより、**新しいポケモンを追加するときは、配列にデータを増やすだけ！**  
 コードを手作業で増やす必要がなくなります。
 
 ---
 
 ## 🛠 実装手順
 
-### 1. `coffees` 配列を作成する
-Step 1 では、`coffee1` 〜 `coffee5` の **5つの変数** を用意しました。  
+### 1. `pokemons` 配列を作成する
+Step 1 では、`pokemon1` 〜 `pokemon5` の **5つの変数** を用意しました。  
 しかし、リストにするなら配列として管理したほうがわかりやすいです。
 
-次のように、`coffees` という配列を作り、データをまとめます。
+次のように、`pokemons` という配列を作り、データをまとめます。
 
 ```swift
-let coffees: [Coffee] = [
-    Coffee(id: 1, title: "Black Coffee", description: "Simple and classic.", ingredients: ["Coffee"], image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887")!),
-    Coffee(id: 2, title: "Latte", description: "Smooth and creamy coffee with milk.", ingredients: ["Espresso", "Milk"], image: URL(string: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=1887")!),
-    Coffee(id: 3, title: "Cappuccino", description: "Espresso, hot milk, and steamed milk foam.", ingredients: ["Espresso", "Milk Foam"], image: URL(string: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&q=80&w=1887")!),
-    Coffee(id: 4, title: "Mocha", description: "Espresso with chocolate and steamed milk.", ingredients: ["Espresso", "Chocolate", "Milk"], image: URL(string: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1887")!),
-    Coffee(id: 5, title: "Espresso", description: "Strong and rich coffee.", ingredients: ["Espresso"], image: URL(string: "https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=1887")!)
+let pokemons: [PokemonListItem] = [
+    PokemonListItem(name: "pikachu", url: "https://pokeapi.co/api/v2/pokemon/25/"),
+    PokemonListItem(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
+    PokemonListItem(name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/4/"),
+    PokemonListItem(name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/"),
+    PokemonListItem(name: "eevee", url: "https://pokeapi.co/api/v2/pokemon/133/"),
 ]
 ```
 
 ---
 
 ### 2. `ForEach` でリストを生成
-Step 1 では、1つずつ手書きで `CoffeeItemView` を追加していました。  
+Step 1 では、1つずつ手書きで `PokemonItemView` を追加していました。  
 これを `ForEach` を使って自動化します。
 
 ```swift
-LazyVStack(spacing: 20) {
-    ForEach(coffees) { coffee in
-        CoffeeItemView(coffee: coffee)
+LazyVStack(spacing: 8) {
+    ForEach(pokemons) { pokemon in
+        PokemonItemView(pokemon: pokemon)
             .padding(.horizontal)
     }
 }
@@ -98,43 +98,44 @@ LazyVStack(spacing: 20) {
 
 ---
 
-### 3. `CoffeeListView` に反映
-`coffees` 配列と `ForEach` を組み合わせて、リスト全体を構築します。
+### 3. `PokemonListView` に反映
+`pokemons` 配列と `ForEach` を組み合わせて、リスト全体を構築します。
 
 ```swift
 import SwiftUI
 
-struct CoffeeListView: View {
-    let coffees: [Coffee] = [
-        Coffee(id: 1, title: "Black Coffee", description: "Simple and classic.", ingredients: ["Coffee"], image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887")!),
-        Coffee(id: 2, title: "Latte", description: "Smooth and creamy coffee with milk.", ingredients: ["Espresso", "Milk"], image: URL(string: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=1887")!),
-        Coffee(id: 3, title: "Cappuccino", description: "Espresso, hot milk, and steamed milk foam.", ingredients: ["Espresso", "Milk Foam"], image: URL(string: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&q=80&w=1887")!),
-        Coffee(id: 4, title: "Mocha", description: "Espresso with chocolate and steamed milk.", ingredients: ["Espresso", "Chocolate", "Milk"], image: URL(string: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1887")!),
-        Coffee(id: 5, title: "Espresso", description: "Strong and rich coffee.", ingredients: ["Espresso"], image: URL(string: "https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=1887")!)
+struct PokemonListView: View {
+    let pokemons: [PokemonListItem] = [
+        PokemonListItem(name: "pikachu", url: "https://pokeapi.co/api/v2/pokemon/25/"),
+        PokemonListItem(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
+        PokemonListItem(name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/4/"),
+        PokemonListItem(name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/"),
+        PokemonListItem(name: "eevee", url: "https://pokeapi.co/api/v2/pokemon/133/"),
     ]
 
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 20) {
-                ForEach(coffees) { coffee in
-                    CoffeeItemView(coffee: coffee)
+            LazyVStack(spacing: 8) {
+                ForEach(pokemons) { pokemon in
+                    PokemonItemView(pokemon: pokemon)
                         .padding(.horizontal)
                 }
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
         }
+        .background(Color(.systemGroupedBackground))
     }
 }
 
 #Preview {
-    CoffeeListView()
+    PokemonListView()
 }
 ```
 
 ---
 
 ### `NetworkedApp` の変更
-エントリーポイント (`NetworkedApp`) で `CoffeeListView` を使うようにします。
+エントリーポイント (`NetworkedApp`) で `PokemonListView` を使うようにします。
 
 ```swift
 import SwiftUI
@@ -143,11 +144,21 @@ import SwiftUI
 struct NetworkedApp: App {
     var body: some Scene {
         WindowGroup {
-            CoffeeListView()
+            PokemonListView()
         }
     }
 }
 ```
+
+---
+
+## 🎯 Step 2 のポイント
+1. **`pokemons` 配列にデータをまとめた**
+   - `pokemon1` 〜 `pokemon5` のバラバラの変数を、1つの配列に整理した。
+2. **`ForEach` でリストを自動生成**
+   - 手書きで5つ並べていたコードが、`ForEach` で **たった数行** になった。
+3. **データの追加が簡単に**
+   - 新しいポケモンを追加するには、配列にデータを1行追加するだけでOK！
 
 ---
 

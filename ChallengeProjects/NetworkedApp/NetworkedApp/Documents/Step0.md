@@ -25,7 +25,7 @@ open ChallengeProjects/NetworkedApp/NetworkedApp.xcodeproj
 ### 2. シミュレーターでアプリを実行する
 - Xcode の画面左上の **再生ボタン ▶️** を押す。
 - シミュレーターにアプリが表示される。
-- **コーヒーのカード** が 1 つ表示されていることを確認する。
+- **ピカチュウのカード** が 1 つ表示されていることを確認する。
 
 <img width="300" src="../../../../docs/images/08_step0.png">
 
@@ -33,7 +33,7 @@ open ChallengeProjects/NetworkedApp/NetworkedApp.xcodeproj
 
 ## 🏗 どのように画面が表示されているのか？
 
-アプリを開くと **コーヒーの情報が書かれたカード** が 1 つ表示されましたね！
+アプリを開くと **ピカチュウの情報が書かれたカード** が 1 つ表示されましたね！
 この仕組みを **コードを見ながら** 理解していきましょう。
 
 ---
@@ -45,20 +45,20 @@ NetworkedApp/
 ├── NetworkedApp.xcodeproj        # Xcodeプロジェクトファイル
 ├── NetworkedApp/                 # アプリのコード
 │   ├── NetworkedApp.swift        # アプリのエントリーポイント
-│   ├── CoffeeListView.swift      # コーヒーの一覧を表示する画面
-│   ├── CoffeeItemView.swift      # コーヒー1つ分の表示（アイテムセル）
-│   ├── Coffee.swift              # コーヒーのデータ構造（構造体）
+│   ├── PokemonListView.swift     # ポケモンの一覧を表示する画面
+│   ├── PokemonItemView.swift     # ポケモン1つ分の表示（アイテムセル）
+│   ├── PokemonDetailView.swift   # ポケモンの詳細を表示する画面
+│   ├── Pokemon.swift             # ポケモンのデータ構造（構造体）
+│   ├── MainTabView.swift         # タブで画面を切り替えるView
 │   ├── Assets.xcassets/          # 画像やアイコンを管理する
 │   ├── Preview Content/          # Xcodeのプレビュー用のデータ
-│   ├── Documents/                 # 説明用ドキュメント
-│   │   ├── coffee_hot.json        # 利用するAPIのレスポンスJSON例
-│   │   ├── Step0/                 # ワークショップのStep 0に対応する資料
-│   │   ├── Step1/                 # ワークショップのStep 1に対応する資料
-│   │   ├── Step2/                 # ワークショップのStep 2に対応する資料
-│   │   ├── Step3/                 # ワークショップのStep 3に対応する資料
-│   │   ├── Step4/                 # ワークショップのStep 4に対応する資料
-│   │   └── Step5/                 # ワークショップのStep 5に対応する資料
-│   └── README.md                 # このプロジェクトの説明
+│   ├── Documents/                # 説明用ドキュメント
+│   │   ├── Step0.md              # ワークショップのStep 0に対応する資料
+│   │   ├── Step1.md              # ワークショップのStep 1に対応する資料
+│   │   ├── Step2.md              # ワークショップのStep 2に対応する資料
+│   │   ├── Step3.md              # ワークショップのStep 3に対応する資料
+│   │   ├── Step4.md              # ワークショップのStep 4に対応する資料
+│   │   └── Step5.md              # ワークショップのStep 5に対応する資料
 ```
 
 ---
@@ -75,7 +75,7 @@ import SwiftUI
 struct NetworkedApp: App {
     var body: some Scene {
         WindowGroup {
-            CoffeeItemView()
+            PokemonItemView()
         }
     }
 }
@@ -86,40 +86,39 @@ struct NetworkedApp: App {
   - ここが **アプリのスタート地点** だと Swift に教えるための印。
 - **`NetworkedApp: App`**
   - アプリ全体の設定をする **アプリ本体の構造**。
-- **`WindowGroup { CoffeeItemView() }`**
-  - 画面に **CoffeeItemView** を表示するように設定している。
+- **`WindowGroup { PokemonItemView() }`**
+  - 画面に **PokemonItemView** を表示するように設定している。
 
 つまり、このコードの意味は
-**「アプリが起動したら `CoffeeItemView` を画面に表示する！」** ということ。
+**「アプリが起動したら `PokemonItemView` を画面に表示する！」** ということ。
 
 ---
 
-## 📌 CoffeeItemView のコードを見てみよう
+## 📌 PokemonItemView のコードを見てみよう
 
-`CoffeeItemView.swift` には、**画面に表示するコーヒーの情報** のコードが書かれています。
+`PokemonItemView.swift` には、**画面に表示するポケモンの情報** のコードが書かれています。
 では、コードを見て **どのように画面が作られているのか** を理解していきましょう。
 
 ---
 
-### 1️⃣ まずはコーヒーのデータを用意する
+### 1️⃣ まずはポケモンのデータを用意する
 
 ```swift
-let coffee = Coffee(
-    id: 1,
-    title: "Black Coffee",
-    description: "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt.",
-    ingredients: ["Coffee"],
-    image: URL(string: "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887")!
+let pokemon = PokemonListItem(
+    name: "pikachu",
+    url: "https://pokeapi.co/api/v2/pokemon/25/"
 )
 ```
 
 #### ここで何をしている？
-- **コーヒーの情報** を変数 `coffee` に保存している。
-- `title` には **コーヒーの名前**、「Black Coffee」が入っている。
-- `description` には **コーヒーの説明** が入っている。
-- `image` には **コーヒーの写真の URL** が入っている。
+- **ポケモンの情報** を変数 `pokemon` に保存している。
+- `name` には **ポケモンの名前**、「pikachu」が入っている。
+- `url` には **ポケモンの API の URL** が入っている。
+- この URL の末尾の数字（`25`）が **ポケモンの図鑑番号（ID）** になる。
+- ID をもとに、スプライト画像の URL が自動で作られる（`imageURL`）。
+- `displayName` で名前の先頭が大文字になる（`pikachu` → `Pikachu`）。
 
-この `coffee` のデータを **画面に表示する** のが `CoffeeItemView` の役割！
+この `pokemon` のデータを **画面に表示する** のが `PokemonItemView` の役割！
 
 ---
 
@@ -127,15 +126,15 @@ let coffee = Coffee(
 
 ```swift
 var body: some View {
-    VStack(alignment: .leading, spacing: 0) {
-        AsyncImage(url: coffee.image) { phase in
+    HStack(spacing: 12) {
+        AsyncImage(url: pokemon.imageURL) { phase in
             switch phase {
             case .empty:
                 ProgressView()
             case .success(let image):
                 image
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
             case .failure:
                 Image(systemName: "photo")
                     .imageScale(.large)
@@ -144,65 +143,78 @@ var body: some View {
                 EmptyView()
             }
         }
-        .frame(height: 200)
-        .frame(maxWidth: .infinity)
-        .contentShape(.rect)
+        .frame(width: 56, height: 56)
+
+        Text("No.\(pokemon.id)")
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .frame(width: 40)
+
+        Text(pokemon.displayName)
+            .font(.body)
+            .fontWeight(.semibold)
+            .lineLimit(1)
+
+        Spacer()
 ```
 
 #### ここで何をしている？
-- **`VStack(alignment: .leading, spacing: 0) { ... }`**
-  - **縦に並ぶレイアウト** を作っている。（VStack = 縦方向の積み重ね）
-- **`AsyncImage(url: coffee.image) { ... }`**
-  - **インターネットから画像を読み込んで表示** する。
+- **`HStack(spacing: 12) { ... }`**
+  - **横に並ぶレイアウト** を作っている。（HStack = 横方向の並び）
+- **`AsyncImage(url: pokemon.imageURL) { ... }`**
+  - **インターネットからポケモンのスプライト画像を読み込んで表示** する。
   - 画像が読み込めない場合は **代わりのアイコン** を表示する。
+  - `.frame(width: 56, height: 56)` で **56×56ポイント** のサイズに固定している。
+- **`Text("No.\(pokemon.id)")`**
+  - ポケモンの図鑑番号（例：「No.25」）を **小さめの文字** で表示する。
+- **`Text(pokemon.displayName)`**
+  - ポケモンの名前（例：「Pikachu」）を **太字** で表示する。
+- **`Spacer()`**
+  - 名前と星ボタンの間に **空白を入れて** 、星ボタンを右端に寄せている。
 
 ---
 
-### 3️⃣ コーヒーの名前や説明を表示する
+### 3️⃣ お気に入りボタンの仕組み
 
 ```swift
-VStack(alignment: .leading, spacing: 10) {
-    HStack {
-        Text(coffee.title)
-            .font(.title)
-        Spacer()
-        Button(action: {
-            isFavorite.toggle()
-        }) {
-            Image(systemName: isFavorite ? "star.fill" : "star")
-        }
-    }
-    Text(coffee.description)
-        .font(.subheadline)
-        .foregroundStyle(.secondary)
+@State private var isFavorite: Bool = false
+```
+
+```swift
+Button(action: {
+    isFavorite.toggle()
+}) {
+    Image(systemName: isFavorite ? "star.fill" : "star")
+        .foregroundStyle(.yellow)
 }
+.buttonStyle(.plain)
 ```
 
 #### ここで何をしている？
-- **`Text(coffee.title)`**
-  - コーヒーの名前（例：「Black Coffee」）を **画面に表示** する。
-- **`Text(coffee.description)`**
-  - コーヒーの説明を **小さめのフォント** で表示する。
+- **`@State private var isFavorite: Bool = false`**
+  - お気に入りの状態を管理する変数。最初は `false`（お気に入りではない）。
+  - `@State` をつけることで、値が変わると **画面が自動で更新** される。
 - **`Button(action: { isFavorite.toggle() })`**
-  - 星のマークを押すと、`isFavorite` が **true/false** に変わる。
-  - `isFavorite` が **true** のときは **星が塗りつぶされる**。
+  - 星のマークを押すと、`isFavorite` が **true/false** に切り替わる。
+  - `isFavorite` が **true** のときは **星が塗りつぶされる（star.fill）**。
+  - `isFavorite` が **false** のときは **星の輪郭だけ（star）** になる。
 
 ---
 
 ## 🎯 Step 0 のポイント
 - **アプリは `NetworkedApp.swift` から始まる**
-  - `WindowGroup { CoffeeItemView() }` により、`CoffeeItemView` が画面に表示される。
-- **`CoffeeItemView` でコーヒーの情報を画面に表示**
-  - `AsyncImage(url:)` で **インターネット上の画像** を表示。
-  - `Text(coffee.title)` で **名前** を表示。
-  - `Text(coffee.description)` で **説明** を表示。
+  - `WindowGroup { PokemonItemView() }` により、`PokemonItemView` が画面に表示される。
+- **`PokemonItemView` でポケモンの情報を画面に表示**
+  - `AsyncImage(url:)` で **インターネット上のスプライト画像** を表示。
+  - `Text("No.\(pokemon.id)")` で **図鑑番号** を表示。
+  - `Text(pokemon.displayName)` で **名前** を表示。
 - **ボタンで「お気に入り」を切り替えられる**
   - 星マークを押すと `isFavorite` が変わる。
 
 ---
 
 ## 🔜 次のステップ
-次のステップでは、**コーヒーのアイテムを複数並べてリストを作る** ことに挑戦します！
-現在は **1つのコーヒー** だけが表示されているので、次のステップで **複数のアイテムを表示** できるようにしましょう。
+次のステップでは、**ポケモンのアイテムを複数並べてリストを作る** ことに挑戦します！
+現在は **1匹のポケモン** だけが表示されているので、次のステップで **複数のポケモンを表示** できるようにしましょう。
 
 ➡️ [Step 1 - アイテムセルを複数個縦に並べる](./Step1.md)
